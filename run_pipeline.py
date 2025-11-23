@@ -60,7 +60,8 @@ def main():
 
     # 3. Parse Text
     print("Parsing descriptions (Regex)...")
-    df[['Model_Name', 'Capacity_Spec', 'Material_Type', 'Embedded_Qty', 'Unit_Price_USD']] = \
+    # FIX: Renaming output columns to snake_case to prevent SQL duplicate column error
+    df[['model_name_parsed', 'capacity_spec_parsed', 'material_type_parsed', 'embedded_qty_parsed', 'unit_price_usd_parsed']] = \
         df['goods_description'].apply(parse_description)
 
     # 4. Feature Engineering (Creates grand_total, categories, and anomaly flags)
@@ -70,7 +71,7 @@ def main():
     # 5. Save Output
     output_path = os.path.join(project_root, 'data', 'processed', 'trade_cleaned.csv')
     
-    # FIX: Ensure the directory exists before saving
+    # Ensure the directory exists before saving
     output_dir = os.path.dirname(output_path)
     os.makedirs(output_dir, exist_ok=True)
     
